@@ -1,0 +1,26 @@
+
+node {
+
+    stage('git checkout') {
+        git branch: 'main',
+           url: 'https://github.com/Kedarling7838/Terraform-Main.git'
+    }
+
+    stage('terraform init') {
+        dir('Day-2-basic-code') {
+            sh 'terraform init'
+        }
+    }
+
+    stage('terraform plan') {
+        dir('Day-2-Basic-code') {
+            sh 'terraform plan'
+        }
+    }
+
+    stage('terraform apply') {
+      dir('Day-2-basic-code-tfvars') {
+           sh "terraform apply -auto-approve"
+         }
+     }
+}
