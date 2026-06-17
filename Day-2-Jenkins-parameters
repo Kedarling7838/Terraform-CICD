@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('git checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Kedarling7838/Terraform-main.git'
+            }
+        }
+
+        stage('terraform init') {
+            steps {
+                dir('Day-2-Basic-code') {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('terraform plan') {
+            steps {
+                dir('Day-2-Basic-code-tfvars') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('terraform apply') {
+            steps {
+                dir('Day-2-Basic-code-tfvars') {
+                    sh "terraform ${action} -auto-approve"
+                }
+            }
+        }
+    }
+}
